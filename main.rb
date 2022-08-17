@@ -1,8 +1,8 @@
 require 'csv'
+require_relative './quickselect'
 # rvm use 3.0.0
 # ruby main.rb
 
-puts "+++> #{File.dirname(__FILE__)}/players.csv"
 def adjust_player_keys(key)
   if key == 'Height(inches)'
     'height'
@@ -67,6 +67,29 @@ team_data4 = team_data3.sort_by{|team| team[1][:team] }
 team_data4.each do |k, obj|
   puts "#{obj[:team]}\n=======================\n   payroll: $#{obj[:payroll]}M\n   wins: #{obj[:wins]}\n   cost/win: $#{obj[:cost]}M\n#{obj[:players].join(', ')}\n\n"
 end
+puts "\n\n"
+
+cost_hash = team_data4.inject({}) do |acc, (k, obj)|
+  acc[obj[:cost]] = obj[:team]
+  acc
+end
+costs = cost_hash.keys.map{|item| item.to_f}
+
+puts "\nPER WIN TOP SPENDERS"
+result = findKthLargest(costs, 1)
+puts "#1: $#{result}M - #{cost_hash[result.to_s]}"
+result = findKthLargest(costs, 2)
+puts "#2: $#{result}M - #{cost_hash[result.to_s]}"
+result = findKthLargest(costs, 3)
+puts "#3: $#{result}M - #{cost_hash[result.to_s]}"
+
+puts "\nPER WIN BOTTOM SPENDERS"
+result = findKthLargest(costs, 26)
+puts "#26: $#{result}M - #{cost_hash[result.to_s]}"
+result = findKthLargest(costs, 27)
+puts "#27: $#{result}M - #{cost_hash[result.to_s]}"
+result = findKthLargest(costs, 28)
+puts "#28: $#{result}M - #{cost_hash[result.to_s]}"
 
 
 puts "\n\n"
