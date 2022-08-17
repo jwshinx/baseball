@@ -1,5 +1,6 @@
 require 'csv'
 require_relative './quickselect'
+require_relative './binarysearch'
 # rvm use 3.0.0
 # ruby main.rb
 
@@ -67,7 +68,7 @@ team_data4 = team_data3.sort_by{|team| team[1][:team] }
 team_data4.each do |k, obj|
   puts "#{obj[:team]}\n=======================\n   payroll: $#{obj[:payroll]}M\n   wins: #{obj[:wins]}\n   cost/win: $#{obj[:cost]}M\n#{obj[:players].join(', ')}\n\n"
 end
-puts "\n\n"
+puts "\n"
 
 cost_hash = team_data4.inject({}) do |acc, (k, obj)|
   acc[obj[:cost]] = obj[:team]
@@ -92,5 +93,13 @@ puts "#27: $#{result}M - #{cost_hash[result.to_s]}"
 result = findKthLargest(costs, 28)
 puts "#28: $#{result}M - #{cost_hash[result.to_s]}"
 
+# bottom 5 spenders using binary search
+k = 5
+bottom_k_spenders = k_closest_binary_search(costs, k)
+
+puts "\nPER WIN BOTTOM SPENDERS (BINARY SEARCH)"
+bottom_k_spenders.each_with_index do |item, idx|
+  puts "##{idx + 1} $#{item}M - #{cost_hash[item.to_s]}"
+end
 
 puts "\n\n"
