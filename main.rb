@@ -75,6 +75,7 @@ cost_hash = team_data4.inject({}) do |acc, (k, obj)|
 end
 costs = cost_hash.keys.map{|item| item.to_f}
 
+# silly demonstration using quickselect.
 puts "\nPER WIN TOP SPENDERS"
 result = findKthLargest(costs, 1)
 puts "#1: $#{result}M - #{cost_hash[result.to_s]}"

@@ -1,3 +1,10 @@
+# use quickselect to find kth element. time complexity of o(n), on average.
+# at worst o(n**2)
+def findKthLargest(arr, k)
+  size = arr.length
+  quickselect(arr, 0, size - 1, size - k)
+end
+
 def quickselect(arr, left, right, k_smallest)
   return arr[left] if (left == right)
   
@@ -35,9 +42,4 @@ def swap(arr, a, b)
   arr[a] = arr[b]
   arr[b] = temp
   arr
-end
-
-def findKthLargest(arr, k)
-  size = arr.length
-  quickselect(arr, 0, size - 1, size - k)
 end
